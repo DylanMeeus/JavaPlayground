@@ -169,8 +169,37 @@ public class CellLayout implements LayoutManager2 {
     public CornerRectangle[] getCornerRectangles(Component component) {
         final CellLocation compLocation = compLocationMap.get(component);
 
+        final int cellWidth = getCellWidth();
+        final int cellHeight = getCellHeight();
+
+        final int rectangleWidth = cellWidth / 4;
+        final int rectangleHeight = cellHeight / 4;
+
+
         // we need to get the 4 points made up by this component
-        return null;
+        // the start cell is the first one.
+        CellLocation cellLocation = compLocationMap.get(component);
+        Point leftTop = getStartPosition(cellLocation.getStartCell());
+        Point rightBottom= getEndPosition(cellLocation.getEndCell());
+        // from this we can determine the missing corners
+        Point rightTop = new Point(rightBottom.x, leftTop.y);
+        Point leftBottom = new Point(leftTop.x, rightBottom.y);
+
+
+        Rectangle r1 = new Rectangle(leftTop.x, leftTop.y, rectangleWidth, rectangleHeight);
+        Rectangle r2 = new Rectangle(rightTop.x - rectangleWidth, rightTop.y, rectangleWidth, rectangleHeight);
+        Rectangle r3 = new Rectangle(leftBottom.x, leftBottom.y - rectangleHeight, rectangleWidth, rectangleHeight);
+        Rectangle r4 = new Rectangle(rightBottom.x - rectangleWidth, rightBottom.y - rectangleHeight, rectangleWidth, rectangleHeight);
+
+        // Assign the rectangles to the appropriate corner
+        CornerRectangle cr1 = new CornerRectangle(CORNER.LT, r1);
+        CornerRectangle cr2 = new CornerRectangle(CORNER.RT, r2);
+        CornerRectangle cr3 = new CornerRectangle(CORNER.LB, r3);
+        CornerRectangle cr4 = new CornerRectangle(CORNER.RB, r4);
+
+
+        return new CornerRectangle[]{cr1, cr2, cr3, cr4};
+
     }
 
 

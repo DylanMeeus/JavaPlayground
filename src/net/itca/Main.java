@@ -79,6 +79,7 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(panel);
         frame.setSize(1000, 1000);
+        frame.setTitle("Cell LayoutManager test");
         frame.setVisible(true);
 
 
@@ -98,13 +99,15 @@ public class Main {
             // so we know that we can stretch and shrink the component
             final Point mouseLocation = mouseEvent.getPoint();
             final Component componentUnderMouse = panel.getComponentAt(mouseLocation);
-            if (componentUnderMouse == null) {
+            // we don't want to count the current panel as selection..
+            if (componentUnderMouse == null || componentUnderMouse == panel) {
+                panel.setCursor(Cursor.getDefaultCursor());
                 return;
             }
 
             final CellLayout layout = (CellLayout) panel.getLayout();
             final int cell = layout.getCellForLocation(mouseLocation);
-            final CellLayout.CornerRectangle[] rects = layout.getCornerRectangles(cell);
+            final CellLayout.CornerRectangle[] rects = layout.getCornerRectangles(componentUnderMouse);
             boolean inSomeRectangle = false;
             for (CellLayout.CornerRectangle rect : rects) {
                 if (rect.getRectangle().contains(mouseLocation)) {
