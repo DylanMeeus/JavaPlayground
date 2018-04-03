@@ -1,10 +1,9 @@
-package net.itca.datastructures.probabilistic.Cuckoo;
+package net.itca.datastructures.probabilistic.cuckoo;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 public class CuckooUtil {
 
@@ -19,13 +18,7 @@ public class CuckooUtil {
      * @throws NoSuchAlgorithmException
      */
     public static byte getFingerprint(final String entry) throws NoSuchAlgorithmException {
-        var bytes = entry.getBytes();
-        // and java does not have a stream on byte[]. thanks Brian! (http://mail.openjdk.java.net/pipermail/lambda-dev/2013-March/008535.html)
-        byte result = bytes[0];
-        for (var i = 1; i < bytes.length; i++) {
-            result ^= bytes[i];
-        }
-        return result;
+        return (byte) (Objects.hash(entry) & 0xff);
     }
 
 

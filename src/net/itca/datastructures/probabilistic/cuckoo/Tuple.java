@@ -1,4 +1,4 @@
-package net.itca.datastructures.probabilistic.Cuckoo;
+package net.itca.datastructures.probabilistic.cuckoo;
 
 public class Tuple<T, E> {
 

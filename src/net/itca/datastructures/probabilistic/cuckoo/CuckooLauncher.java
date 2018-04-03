@@ -1,4 +1,4 @@
-package net.itca.datastructures.probabilistic.Cuckoo;
+package net.itca.datastructures.probabilistic.cuckoo;
 
 public class CuckooLauncher {
 
@@ -7,6 +7,11 @@ public class CuckooLauncher {
         for (int i = 0; i < 10; i++) {
             filter.insert(Integer.toString(i));
         }
+
+        for (int i = 0; i < 10; i++) {
+            System.out.println(filter.contains(Integer.toString(i)));
+        }
+
     }
 }
 
